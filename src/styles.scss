@@ -1,0 +1,17 @@
+@import 'variables';
+@import 'app/styles/main';
+
+html,
+body {
+  -webkit-overflow-scrolling: touch;
+  margin: 0;
+  overflow-x: hidden;
+  color: $primary-text-color;
+  font-family: Roboto;
+  background-color: #fafafa;
+  font-size: 14px;
+}
+
+.mat-progress-spinner circle {
+  stroke: $primary-blue;
+}

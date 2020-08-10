@@ -1,0 +1,69 @@
+<div class="w-100 h-100 d-flex justify-content-center align-items-center mt-5"
+     *ngIf="loading; else content">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+
+<ng-template #content>
+  <div class="w-100 h-100 leaderboard">
+    <div class="leaderboard__header w-100 d-flex justify-content-between align-items-center">
+      <div class="header">Leaderboards</div>
+      <div class="d-flex alpha-level align-items-center">
+        <div class="mr-3">Level</div>
+        <mat-form-field class="form-field">
+          <mat-select [(ngModel)]="level"
+                      (selectionChange)="onLevelChange()">
+            <mat-option *ngFor="let l of levels"
+                        [value]="l.value">{{ l.displayName }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="d-flex w-100 h-100 justify-content-center align-items-center mt-5"
+         *ngIf="loadingReportCard; else reportTable">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+    <ng-template #reportTable>
+      <div class="leaderboard__content d-flex justify-content-center">
+        <ng-container *ngFor="let leaderboard of leaderboards; let i = index">
+          <div class="content d-flex position-relative justify-content-center">
+
+            <div class="leaderboard-list">
+              <div class="list-header font-weight-bold d-flex justify-content-center align-items-center">
+                {{ this.level }} Leaderboard for week&nbsp;
+                <mat-form-field class="form-field form-field-select ml-2"
+                                appearance="fill">
+                  <mat-select [(ngModel)]="weekDate"
+                              (selectionChange)="onWeekLevelChange()">
+                    <mat-option *ngFor="let weekStartDay of weekSelect"
+                                [value]="weekStartDay">
+                      {{ weekStartDay | date: 'EEEE, MMMM d, y' }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="list-content" *ngIf="leaderboard.results?.length; else empty">
+                <app-leaderboard-table [dataSource]="leaderboard.results"
+                                       [currentUser]="currentUser"
+                                       [displayedColumns]="displayedColumns"></app-leaderboard-table>
+              </div>
+              <ng-template #empty>
+                <div class="empty d-flex align-items-center py-3 px-2">
+                  No data found
+                </div>
+              </ng-template>
+              <div class="list-footer">
+                <div class="font-weight-bold mt-2">About this leaderboard</div>
+                <p>
+                  This is a leaderboard footer. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non libero nibh. Sed bibendum finibus tincidunt. Vestibulum nunc purus, viverra et turpis sit amet, condimentum auctor est. Sed quis sodales massa. Sed vitae consectetur est. Aliquam erat volutpat. Duis tristique, ex nec scelerisque imperdiet, risus tellus tempus turpis, non consectetur nulla nibh eu odio. Fusce ac urna et mauris pulvinar interdum quis in dui. In vitae congue felis. Sed scelerisque pharetra urna, et iaculis augue venenatis a. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris ornare eros sed nisl dictum posuere. Etiam eget mi in quam interdum aliquet. <br/>
+
+                  Donec lacinia sed erat eget varius. Proin eget lobortis nunc. Nunc eu nisl in risus eleifend elementum nec ac orci. Aliquam lobortis hendrerit rutrum. Fusce et magna elit. Quisque luctus velit vel arcu blandit venenatis in ac arcu. Sed tempus luctus diam, in pharetra sapien cursus quis. Praesent massa dolor, faucibus nec luctus eleifend, dignissim vel sapien. Curabitur vehicula euismod felis, a malesuada mauris mattis in. Aenean tempor luctus sapien a facilisis. Mauris eget mi id nisl lacinia congue ac id odio. Aenean quis pretium sem. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec euismod feugiat arcu, vitae aliquet ex porta sit amet. Quisque viverra sem nunc, et faucibus turpis fringilla nec. <br/>
+
+                  Integer id pharetra metus. Nunc congue orci vel blandit pulvinar. In scelerisque sit amet nulla in sagittis. In et pulvinar nisi. Nullam vestibulum, dolor at fringilla tempor, leo nisi porta tortor, vel facilisis odio dui ac lorem. Suspendisse dictum maximus consectetur. Etiam non orci ut risus elementum volutpat.
+                </p>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-template>
+  </div>
+</ng-template>

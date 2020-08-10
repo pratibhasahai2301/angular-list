@@ -1,0 +1,11 @@
+@import "variables";
+
+.main-container {
+  height: 100vh;
+}
+
+.topbar {
+  height: 51px;
+  background: $primary-blue;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
